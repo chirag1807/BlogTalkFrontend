@@ -5,6 +5,7 @@ import 'package:blogtalk/repositories/UserRegLogin.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../config.dart';
 import '../screens/user_reg_login/login_screen.dart';
 import '../utils/constants.dart';
 import '../utils/prefs.dart';

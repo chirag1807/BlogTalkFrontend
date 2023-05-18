@@ -9,6 +9,7 @@ import 'package:blogtalk/screens/user_reg_login/login_screen.dart';
 import 'package:blogtalk/utils/prefs.dart';
 import 'package:get/get.dart';
 
+import '../config.dart';
 import '../models/User.dart';
 import 'package:http/http.dart' as http;
 
