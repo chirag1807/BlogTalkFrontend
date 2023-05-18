@@ -12,7 +12,7 @@ class CreateBlogProvider extends ChangeNotifier{
   Map<int, String> topicNameIds = <int, String>{};
   int circularBarShow = 1;
   int blogTopic = -1;
-  XFile? imageFile;
+  File? imageFile;
   int circularBarShowBlogPost = -1;
   int successUploadPost = -1;
 
@@ -28,7 +28,7 @@ class CreateBlogProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void pickImage(XFile imgFile) async {
+  void pickImage(File imgFile) async {
       imageFile = imgFile;
       notifyListeners();
   }

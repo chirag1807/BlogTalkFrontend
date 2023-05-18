@@ -4,6 +4,7 @@ import 'package:blogtalk/providers/SplashScreenProvider.dart';
 import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/login_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/select_preferred_topics_screen.dart';
+import 'package:blogtalk/utils/prefs.dart';
 import 'package:get/get.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:flutter/material.dart';

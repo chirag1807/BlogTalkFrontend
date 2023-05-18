@@ -35,7 +35,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
 
   HashMap<int, String> leadTypeNameId = HashMap<int, String>();
   int blogTopicValue = -1;
-  XFile? coverImg;
+  File? coverImg;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,20 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
         },
         child: Scaffold(
           backgroundColor: themeColorBlue,
+          appBar: AppBar(
+            title: text("Create Blog", 20, FontWeight.w700, themeColorWhite, TextDecoration.none, TextAlign.center),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: appBodyGradient(),
+                border: const Border(
+                  bottom: BorderSide(
+                    color: themeColorWhite,
+                    width: 2.0
+                  )
+                )
+              ),
+            ),
+          ),
           body: SafeArea(
             child: Container(
               width: w,
@@ -61,22 +75,23 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      padding: const EdgeInsets.only(left: 10.0,),
-                      child: text("Create Blog", 20, FontWeight.w700, themeColorWhite, TextDecoration.none, TextAlign.center),
-                    ),
-                    const SizedBox(height: 5,),
-                    const Divider(color: themeColorWhite, thickness: 3.0,),
+                    // Container(
+                    //   alignment: Alignment.topLeft,
+                    //   padding: const EdgeInsets.only(left: 10.0,),
+                    //   child: text("Create Blog", 20, FontWeight.w700, themeColorWhite, TextDecoration.none, TextAlign.center),
+                    // ),
+                    // const SizedBox(height: 5,),
+                    // const Divider(color: themeColorWhite, thickness: 3.0,),
                     Consumer<CreateBlogProvider>(
                       builder: (context, provider, index){
                         coverImg = provider.imageFile;
                       return InkWell(
                         onTap: () async {
                           try{
-                            final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                            XFile? pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
                             if(pickedImage != null){
-                              provider.pickImage(pickedImage);
+                              File pickedFileImage = File(pickedImage.path);
+                              provider.pickImage(pickedFileImage);
                             }
                             else{
                               ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(errorMsg, themeColorSnackBarRed));
@@ -283,7 +298,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                       }
                     return InkWell(
                       onTap: (){
-                        provider.uploadPost(addTitleCtrl.text, addContentCtrl.text, blogTopicValue, coverImg as File);
+                        provider.uploadPost(addTitleCtrl.text, addContentCtrl.text, blogTopicValue, coverImg);
                       },
                       child: Container(
                         width: w * 0.4,

@@ -14,37 +14,40 @@ class BlogPost {
   Future<int?> uploadPost(String title, String content, int topic, File? coverImg) async {
     String accessToken = Prefs.getInstance().getString(ACCESS_TOKEN)!;
 
-    if(coverImg != null){
-      var request = http.MultipartRequest('POST', Uri.parse("$baseUrl/blogPost"));
-      request.files.add(await http.MultipartFile.fromPath('image', coverImg.path));
-
-      request.fields['title'] = title;
-      request.fields['content'] = content;
-
-      request.fields['topic'] = topic.toString();
-    }
-    else{
       try{
-        print("111");
-        String reqBody = json.encode(
-            {
-              "title": title,
-              "content": content,
-              "topic": topic
-              // image
-            }
-        );
-        var response = await http.post(
-            Uri.parse("$baseUrl/blogPost"),
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-              "Authorization": "Bearer $accessToken",
-            },
-            body: reqBody
-        );
+        var response;
+        if(coverImg == null){
+          print("111");
+          String reqBody = json.encode(
+              {
+                "title": title,
+                "content": content,
+                "topic": topic
+              }
+          );
+          response = await http.post(
+              Uri.parse("$baseUrl/blogPost"),
+              headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                "Authorization": "Bearer $accessToken",
+              },
+              body: reqBody
+          );
 
-        print("222");
-        log(response.body);
+          print("222");
+          log(response.body);
+        }
+        else{
+          var request = http.MultipartRequest('POST', Uri.parse("$baseUrl/blogPost"));
+          request.files.add(await http.MultipartFile.fromPath('image', coverImg.path));
+
+          request.headers["Authorization"] = "Bearer $accessToken";
+          request.fields['title'] = title;
+          request.fields['content'] = content;
+          request.fields['topic'] = topic.toString();
+
+          response = await request.send();
+        }
 
         if(response.statusCode == 200){
           print("done");
@@ -68,7 +71,6 @@ class BlogPost {
         log(e.toString());
         return 0;
       }
-    }
 
   }
 }
