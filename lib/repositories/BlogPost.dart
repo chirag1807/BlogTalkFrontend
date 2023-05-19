@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:blogtalk/repositories/UserRegLogin.dart';
+import 'package:blogtalk/models/BlogPost.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -73,4 +74,46 @@ class BlogPost {
       }
 
   }
+
+  Future<List<BlogPostModel>?> getUserAllPosts() async {
+    try{
+      String accessToken = Prefs.getInstance().getString(ACCESS_TOKEN)!;
+      var response = await http.get(
+          Uri.parse("$baseUrl/blogPost"),
+          headers: {"Authorization": "Bearer $accessToken"}
+      );
+
+      if(response.statusCode == 200){
+        print("done");
+        var body = jsonDecode(response.body);
+
+        List<BlogPostModel> blogPosts = [];
+        for(int i = 0; i < body["result"].length; i++){
+          blogPosts.add(BlogPostModel.fromJson(body["result"][i]));
+          print(blogPosts[i].topic);
+        }
+
+        return blogPosts;
+      }
+      else if(response.statusCode == 204){
+        return [];
+      }
+      else if(response.statusCode == 401){
+        int? a = await UserRegLogin().resetToken();
+        if(a != 1){
+          Get.offAll(() => const LoginScreen(indicator: 0,));
+        }
+        else{
+          return null;
+        }
+      }
+      else{
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
 }

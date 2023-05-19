@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:blogtalk/providers/SplashScreenProvider.dart';
 import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
+import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/login_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/select_preferred_topics_screen.dart';
 import 'package:blogtalk/utils/prefs.dart';
@@ -66,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
               // abc();
               void abc1() {
                 Timer(const Duration(seconds: 1), () {
-                  Get.offAll(() => const CreateBlogScreen());
+                  Get.offAll(() => const BottomNavBarScreen());
                 });
               }
               abc1();

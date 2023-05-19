@@ -1,3 +1,4 @@
+import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:blogtalk/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -26,53 +27,77 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double w = getWidth(context);
     double h = getHeight(context);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.transparent,
-      body: Container(
-        width: w,
-        height: h,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: w * 0.8,
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: textFormField(searchBlogCtrl, TextInputType.text, false,
-                        "Search Blog", Icon(Icons.search, color: themeColorHint2,), const SizedBox(), false, 1)
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Container(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Container(
+                      width: w * 0.8,
+                      height: h * 0.06,
+                      child: textFormField(searchBlogCtrl, TextInputType.text, false,
+                          "Search Blog", const Icon(Icons.search, color: themeColorHint2,), const SizedBox(), false, 1)
                   ),
-                  SizedBox(
-                    width: w * 0.20,
-                    child: InkWell(
-                        onTap: (){
-                          Get.to(() => const MyProfileScreen(), transition: Transition.upToDown);
-                        },
-                        child: SvgPicture.asset("assets/images/profile_icon.svg")),
-                  )
-                ],
-              )
-            ],
+                ),
+                SizedBox(
+                  width: w * 0.20,
+                  child: InkWell(
+                      onTap: (){
+                        Get.to(() => const MyProfileScreen(), transition: Transition.upToDown);
+                      },
+                      child: SvgPicture.asset("assets/images/profile_icon.svg")),
+                )
+              ],
+            ),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: appBodyGradient(),
+                border: const Border(
+                    bottom: BorderSide(
+                        color: themeColorWhite,
+                        width: 2.0
+                    )
+                )
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){
-
-        },
-          backgroundColor: const Color(0xCCFFFFFF),
-        icon: SvgPicture.asset("assets/images/write_blog_icon.svg"),
-        label: ShaderMask(
-          blendMode: BlendMode.srcIn,
-          shaderCallback: (Rect bounds) {
-            return appBodyGradient().createShader(bounds);
+        body: Container(
+          width: w,
+          height: h,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [],
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: (){
+            Get.to(() => const CreateBlogScreen());
           },
-          child: const Text("Write Blog", style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w500
-          ),),
-        )
+            backgroundColor: const Color(0xCCFFFFFF),
+          icon: SvgPicture.asset("assets/images/write_blog_icon.svg"),
+          label: ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (Rect bounds) {
+              return appBodyGradient().createShader(bounds);
+            },
+            child: const Text("Write Blog", style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w500
+            ),),
+          )
+        ),
       ),
     );
   }

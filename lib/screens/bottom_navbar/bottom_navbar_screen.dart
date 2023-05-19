@@ -14,7 +14,6 @@ class BottomNavBarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int myIndex= 0;
     final screens = [
       const HomeScreen(),
       const YourPostsScreen(),
@@ -59,11 +58,10 @@ class BottomNavBarScreen extends StatelessWidget {
                 width: w,
                 child: Consumer<BottomNavIndexChangeProvider>(
                   builder: (context, provider, child){
-                    myIndex = provider.myIndex;
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      myIndex == 0 ?
+                      provider.myIndex == 0 ?
                       selectedContainer(w, 'assets/images/home_icon.svg', 'Home') :
                       InkWell(
                           onTap: (){
@@ -71,7 +69,7 @@ class BottomNavBarScreen extends StatelessWidget {
                           },
                           child: unselectedContainer(w, 'assets/images/home_icon.svg')),
 
-                      myIndex == 1 ?
+                      provider.myIndex == 1 ?
                       selectedContainer(w, 'assets/images/your_posts_icon.svg', 'Posts') :
                       InkWell(
                           onTap: (){
@@ -79,7 +77,7 @@ class BottomNavBarScreen extends StatelessWidget {
                           },
                           child: unselectedContainer(w, 'assets/images/your_posts_icon.svg')),
 
-                      myIndex == 2 ?
+                      provider.myIndex == 2 ?
                       selectedContainer(w, 'assets/images/notification_icon.svg', 'Notification') :
                       InkWell(
                           onTap: (){
@@ -87,7 +85,7 @@ class BottomNavBarScreen extends StatelessWidget {
                           },
                           child: unselectedContainer(w, 'assets/images/notification_icon.svg')),
 
-                      myIndex == 3 ?
+                      provider.myIndex == 3 ?
                       selectedContainer(w, 'assets/images/saved_posts_icon.svg', 'Saved') :
                       InkWell(
                           onTap: (){
