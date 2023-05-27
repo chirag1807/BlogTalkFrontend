@@ -1,79 +1,47 @@
-class BlogPostModel {
-  String? sId;
+class BlogPostWithAuthor {
+  String? id;
   String? title;
-  String? content;
   int? topic;
-  Author? author;
-  String? coverImage;
-  int? readMinute;
-  List<String>? views;
-  int? noOfViews;
-  List<String>? likes;
-  int? noOfLikes;
+  String? image;
   String? publishedAt;
-  int? iV;
-  int? likedOrNot;
+  int? readMinute;
   int? followingOrNot;
-  int? savedOrNot;
+  Author? author;
 
-  BlogPostModel(
-      {this.sId,
+  BlogPostWithAuthor(
+      {this.id,
         this.title,
-        this.content,
         this.topic,
-        this.author,
-        this.coverImage,
-        this.readMinute,
-        this.views,
-        this.noOfViews,
-        this.likes,
-        this.noOfLikes,
+        this.image,
         this.publishedAt,
-        this.iV,
-        this.likedOrNot,
+        this.readMinute,
         this.followingOrNot,
-        this.savedOrNot});
+        this.author});
 
-  BlogPostModel.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+  BlogPostWithAuthor.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['title'];
-    content = json['content'];
     topic = json['topic'];
+    image = json['image'];
+    publishedAt = json['publishedAt'];
+    readMinute = json['readMinute'];
+    followingOrNot = json['followingOrNot'];
     author =
     json['author'] != null ? Author.fromJson(json['author']) : null;
-    coverImage = json['coverImage'];
-    readMinute = json['readMinute'];
-    views = json['views'].cast<String>();
-    noOfViews = json['noOfViews'];
-    likes = json['likes'].cast<String>();
-    noOfLikes = json['noOfLikes'];
-    publishedAt = json['publishedAt'];
-    iV = json['__v'];
-    likedOrNot = json['likedOrNot'];
-    followingOrNot = json['followingOrNot'];
-    savedOrNot = json['savedOrNot'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
+    data['id'] = id;
     data['title'] = title;
-    data['content'] = content;
     data['topic'] = topic;
+    data['image'] = image;
+    data['publishedAt'] = publishedAt;
+    data['readMinute'] = readMinute;
+    data['followingOrNot'] = followingOrNot;
     if (author != null) {
       data['author'] = author!.toJson();
     }
-    data['coverImage'] = coverImage;
-    data['readMinute'] = readMinute;
-    data['views'] = views;
-    data['noOfViews'] = noOfViews;
-    data['likes'] = likes;
-    data['noOfLikes'] = noOfLikes;
-    data['publishedAt'] = publishedAt;
-    data['__v'] = iV;
-    data['likedOrNot'] = likedOrNot;
-    data['followingOrNot'] = followingOrNot;
-    data['savedOrNot'] = savedOrNot;
     return data;
   }
 }

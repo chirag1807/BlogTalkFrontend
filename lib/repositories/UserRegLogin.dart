@@ -157,6 +157,48 @@ class UserRegLogin{
     }
   }
 
+  Future<Map<int, String>?> getOnlyTopicNameIds() async {
+    try{
+      String accessToken = Prefs.getInstance().getString(ACCESS_TOKEN)!;
+      var response = await http.get(
+          Uri.parse("$baseUrl/topicNameId/all"),
+          headers: {"Authorization": "Bearer $accessToken"}
+      );
+
+      log(response.body);
+
+      if(response.statusCode == 200){
+        print("done");
+        var body = jsonDecode(response.body);
+
+        var topicNameIds = TopicNameId.fromJson(body);
+
+        Map<int, String> topicNameId = <int, String>{};
+        for(var ele in topicNameIds.result!){
+          topicNameId[ele.topicId!] = ele.topicName!;
+        }
+
+        return topicNameId;
+      }
+      else if(response.statusCode == 401){
+        int? a = await resetToken();
+        if(a != 1){
+          Get.offAll(() => const LoginScreen(indicator: 0,));
+        }
+        else{
+          return null;
+        }
+      }
+      else{
+        return null;
+      }
+
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<ListAndMap?> getAllTopicNameId() async {
     try{
       String accessToken = Prefs.getInstance().getString(ACCESS_TOKEN)!;

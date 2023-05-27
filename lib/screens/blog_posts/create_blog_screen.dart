@@ -1,16 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:blogtalk/providers/CreateBlogProvider.dart';
-import 'package:blogtalk/utils/prefs.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:get/get.dart';
-
 import '../../utils/constants.dart';
 import '../../utils/widgets.dart';
 
@@ -111,7 +105,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                           ),
                           child: coverImg != null ?
                              Image.file(
-                               coverImg! as File,
+                               coverImg!,
                                fit: BoxFit.cover,
                              ) :
                           Column(
@@ -131,8 +125,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                     Consumer<CreateBlogProvider>(
                       builder: (context, provider, child){
                         if(provider.circularBarShow == 1){
-                          Future.microtask(() => provider.getAllTopicNameIds());
-                          print("ha bas tere name se hi gujara");
+                          Future.microtask(() => provider.getAllTopicNameIds(-1));
                         }
                         blogTopicValue = provider.blogTopic;
                       return Container(
@@ -298,7 +291,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                       }
                     return InkWell(
                       onTap: (){
-                        provider.uploadPost(addTitleCtrl.text, addContentCtrl.text, blogTopicValue, coverImg);
+                        provider.uploadPost("", addTitleCtrl.text, addContentCtrl.text, blogTopicValue, coverImg, 0);
                       },
                       child: Container(
                         width: w * 0.4,

@@ -1,8 +1,8 @@
 import 'package:blogtalk/providers/BottomNavIndexChangeProvider.dart';
 import 'package:blogtalk/screens/bottom_navbar/home_screen.dart';
-import 'package:blogtalk/screens/bottom_navbar/notification_screen.dart';
 import 'package:blogtalk/screens/bottom_navbar/your_posts_screen.dart';
 import 'package:blogtalk/screens/bottom_navbar/saved_posts_screen.dart';
+import 'package:blogtalk/screens/user_profile_setting/following_screen.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:blogtalk/utils/widgets.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,8 @@ class BottomNavBarScreen extends StatelessWidget {
     final screens = [
       const HomeScreen(),
       const YourPostsScreen(),
-      const NotificationScreen(),
+      // const NotificationScreen(),
+      const FollowingScreen(),
       const SavedPostsScreen()
     ];
     double w = getWidth(context);

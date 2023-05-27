@@ -1,11 +1,11 @@
 import 'package:blogtalk/providers/BottomNavIndexChangeProvider.dart';
+import 'package:blogtalk/screens/blog_posts/read_blog_screen1.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../utils/widgets.dart';
 import '../blog_posts/create_blog_screen.dart';
 import '../user_profile_setting/my_profile_screen.dart';
@@ -97,82 +97,104 @@ class _YourPostsScreenState extends State<YourPostsScreen> {
                           shrinkWrap: true,
                           itemCount: provider.allPosts!.length,
                           itemBuilder: (context, index){
-                            return Container(
-                              width: w,
-                              height: h * 0.14,
-                              margin: const EdgeInsets.all(8.0),
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                color: themeColorWhite,
-                                borderRadius: BorderRadius.circular(10.0)
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 7,
-                                        child: Container(
-                                          alignment: Alignment.topLeft,
-                                          child: const Text("me tera ban paya hu jab se me mil jata hu tum se hi tum se hi  har waqt soch pata hu tum se hi", style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500,
-                                            color: themeColorBlack,
-                                            decoration: TextDecoration.none,
-                                            decorationThickness: 2.0,
-                                          ),
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        ),
+                            return InkWell(
+                              onTap: (){
+                                Get.to(() => ReadBlogScreen1(blogId: provider.allPosts![index].id ?? "",
+                                    topic: provider.topicNameIds![provider.allPosts![index].topic] ?? "", indicator: 0));
+                              },
+                              onLongPress: (){
+                                showDialog(context: context, builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Delete Post'),
+                                    content: const Text('Are you sure to want to delete this post?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('No'),
                                       ),
-                                      const Expanded(flex: 1, child: SizedBox()),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          width: 60,
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: provider.allPosts![index].coverImage == "" ?
-                                            themeColorWhite : themeColorGreen),
-                                            borderRadius: BorderRadius.circular(2.0)
-                                          ),
-                                          child: provider.allPosts![index].coverImage == "" ?
-                                          SvgPicture.asset("assets/images/empty_cover_image.svg")
-                                          : Image.network(provider.allPosts![index].coverImage!),
-                                        ),
-                                      )
+                                      TextButton(
+                                        onPressed: () {
+                                          provider.deleteUserPost(index);
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Yes'),
+                                      ),
                                     ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
+                                  );
+                                });
+                              },
+                              child: Container(
+                                width: w,
+                                height: h * 0.14,
+                                margin: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                  color: themeColorWhite,
+                                  borderRadius: BorderRadius.circular(10.0)
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 7,
+                                          child: Container(
+                                            alignment: Alignment.topLeft,
+                                            child: overFlowText(provider.allPosts![index].title!, 17, FontWeight.w500, themeColorBlack,
+                                                TextDecoration.none, TextAlign.justify, 3, TextOverflow.ellipsis),
+                                          ),
+                                        ),
+                                        const Expanded(flex: 1, child: SizedBox()),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                            width: 60,
+                                            height: 60,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(4.0),
-                                              gradient: appBodyGradient()
+                                              border: Border.all(color: provider.allPosts![index].image == "" ?
+                                              themeColorWhite : themeColorGreen),
+                                              borderRadius: BorderRadius.circular(2.0)
                                             ),
-                                            child: Center(
-                                              child: text(provider.allPosts![index].topic.toString(), 14, FontWeight.w400,
+                                            child: provider.allPosts![index].image == "" ?
+                                            SvgPicture.asset("assets/images/empty_cover_image.svg")
+                                            : Image.network(provider.allPosts![index].image!),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.all(4.0),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(4.0),
+                                                gradient: appBodyGradient()
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: provider.topicNameIds != null ?
+                                              text(provider.topicNameIds![provider.allPosts![index].topic] ?? "    ", 14, FontWeight.w400,
+                                                  themeColorWhite, TextDecoration.none, TextAlign.center) : text("    ", 14, FontWeight.w400,
                                                   themeColorWhite, TextDecoration.none, TextAlign.center),
                                             ),
-                                          ),
-                                          const SizedBox(width: 3.0,),
-                                          text("${provider.allPosts![index].readMinute} min read", 14, FontWeight.w400,
-                                              themeColorBlack, TextDecoration.none, TextAlign.center)
-                                        ],
-                                      ),
-                                      text(DateFormat("dd MMMM yyyy").format(DateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                                          .parse(provider.allPosts![index].publishedAt!)),
-                                          14, FontWeight.w400, themeColorBlack, TextDecoration.none, TextAlign.center)
-                                    ],
-                                  )
-                                ],
+                                            const SizedBox(width: 3.0,),
+                                            text("${provider.allPosts![index].readMinute} min read", 14, FontWeight.w400,
+                                                themeColorBlack, TextDecoration.none, TextAlign.center)
+                                          ],
+                                        ),
+                                        text(DateFormat("dd MMMM yyyy").format(DateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                                            .parse(provider.allPosts![index].publishedAt!)),
+                                            14, FontWeight.w400, themeColorBlack, TextDecoration.none, TextAlign.center)
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },

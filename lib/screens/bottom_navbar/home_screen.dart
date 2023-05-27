@@ -1,4 +1,6 @@
+import 'package:blogtalk/repositories/UserRegLogin.dart';
 import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
+import 'package:blogtalk/screens/user_profile_setting/followers_screen.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:blogtalk/utils/widgets.dart';
 import 'package:flutter/material.dart';

@@ -1,84 +1,28 @@
-class BlogPostModel {
-  String? sId;
-  String? title;
-  String? content;
-  int? topic;
-  Author? author;
-  String? coverImage;
-  int? readMinute;
-  List<String>? views;
-  int? noOfViews;
-  List<String>? likes;
-  int? noOfLikes;
-  String? publishedAt;
-  int? iV;
-  int? likedOrNot;
-  int? followingOrNot;
-  int? savedOrNot;
+class FollowersModel {
+  String? followerUid;
+  int? isFollowing;
+  User? user;
 
-  BlogPostModel(
-      {this.sId,
-        this.title,
-        this.content,
-        this.topic,
-        this.author,
-        this.coverImage,
-        this.readMinute,
-        this.views,
-        this.noOfViews,
-        this.likes,
-        this.noOfLikes,
-        this.publishedAt,
-        this.iV,
-        this.likedOrNot,
-        this.followingOrNot,
-        this.savedOrNot});
+  FollowersModel({this.followerUid, this.isFollowing, this.user});
 
-  BlogPostModel.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    title = json['title'];
-    content = json['content'];
-    topic = json['topic'];
-    author =
-    json['author'] != null ? Author.fromJson(json['author']) : null;
-    coverImage = json['coverImage'];
-    readMinute = json['readMinute'];
-    views = json['views'].cast<String>();
-    noOfViews = json['noOfViews'];
-    likes = json['likes'].cast<String>();
-    noOfLikes = json['noOfLikes'];
-    publishedAt = json['publishedAt'];
-    iV = json['__v'];
-    likedOrNot = json['likedOrNot'];
-    followingOrNot = json['followingOrNot'];
-    savedOrNot = json['savedOrNot'];
+  FollowersModel.fromJson(Map<String, dynamic> json) {
+    followerUid = json['followerUid'];
+    isFollowing = json['isFollowing'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['title'] = title;
-    data['content'] = content;
-    data['topic'] = topic;
-    if (author != null) {
-      data['author'] = author!.toJson();
+    data['followerUid'] = followerUid;
+    data['isFollowing'] = isFollowing;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    data['coverImage'] = coverImage;
-    data['readMinute'] = readMinute;
-    data['views'] = views;
-    data['noOfViews'] = noOfViews;
-    data['likes'] = likes;
-    data['noOfLikes'] = noOfLikes;
-    data['publishedAt'] = publishedAt;
-    data['__v'] = iV;
-    data['likedOrNot'] = likedOrNot;
-    data['followingOrNot'] = followingOrNot;
-    data['savedOrNot'] = savedOrNot;
     return data;
   }
 }
 
-class Author {
+class User {
   String? sId;
   String? name;
   String? bio;
@@ -96,7 +40,7 @@ class Author {
   String? muted;
   int? iV;
 
-  Author(
+  User(
       {this.sId,
         this.name,
         this.bio,
@@ -114,7 +58,7 @@ class Author {
         this.muted,
         this.iV});
 
-  Author.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
     bio = json['bio'];

@@ -55,7 +55,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           width: w * 0.20,
                           child: InkWell(
                               onTap: (){
-                                Get.to(() => const EditProfileScreen(), transition: Transition.upToDown);
+                                Get.to(() => const EditProfileScreen(name: 'Dhyey Panchal', bio: 'FullStack Developer', image: '',),
+                                    transition: Transition.upToDown);
                               },
                               child: SvgPicture.asset("assets/images/edit_profile_icon.svg")),
                         )

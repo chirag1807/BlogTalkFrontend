@@ -1,9 +1,6 @@
-import 'dart:collection';
 import 'dart:io';
-
 import 'package:blogtalk/repositories/BlogPost.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../models/ListAndMap.dart';
 import '../repositories/UserRegLogin.dart';
@@ -16,10 +13,11 @@ class CreateBlogProvider extends ChangeNotifier{
   int circularBarShowBlogPost = -1;
   int successUploadPost = -1;
 
-  void getAllTopicNameIds() async {
+  void getAllTopicNameIds(int blogTopicValue) async {
     ListAndMap? topicNameIdsWithFavTopics = await UserRegLogin().getAllTopicNameId();
     topicNameIds = topicNameIdsWithFavTopics!.allTopicsNameId;
      circularBarShow = 0;
+     blogTopic = blogTopicValue;
     notifyListeners();
   }
 
@@ -33,11 +31,10 @@ class CreateBlogProvider extends ChangeNotifier{
       notifyListeners();
   }
 
-  void uploadPost(String title, String content, int topic, File? coverImg) async {
+  void uploadPost(String id, String title, String content, int topic, File? coverImg, int indicator) async {
     circularBarShowBlogPost = 1;
     notifyListeners();
-    BlogPost blogPost = BlogPost();
-    int? a = await blogPost.uploadPost(title, content, topic, coverImg);
+    int? a = await BlogPost().uploadPost(id, title, content, topic, coverImg, indicator);
     if(a == 1){
       circularBarShowBlogPost = 0;
       successUploadPost = 1;

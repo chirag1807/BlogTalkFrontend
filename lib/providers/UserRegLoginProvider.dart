@@ -1,5 +1,4 @@
 import 'package:blogtalk/repositories/UserRegLogin.dart';
-import 'package:blogtalk/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/User.dart';

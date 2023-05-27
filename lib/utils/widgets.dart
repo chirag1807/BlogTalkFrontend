@@ -119,6 +119,21 @@ Widget text(String text, double fontSize, FontWeight fontWeight, Color color, Te
   );
 }
 
+Widget overFlowText(String text, double fontSize, FontWeight fontWeight, Color color, TextDecoration textDecoration,
+    TextAlign textAlign, int maxLines, TextOverflow textOverflow){
+  return Text(text, style: TextStyle(
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+    decoration: textDecoration,
+    decorationThickness: 2.0,
+  ),
+    textAlign: textAlign,
+    maxLines: maxLines,
+    overflow: textOverflow,
+  );
+}
+
 class Button extends StatelessWidget {
   final void Function() onTap;
   final EdgeInsets? margin;

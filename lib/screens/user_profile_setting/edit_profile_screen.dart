@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:blogtalk/providers/UserProfileSettingProvider.dart';
+import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
 import 'package:blogtalk/screens/user_profile_setting/edit_email_pass_screen.dart';
 import 'package:blogtalk/screens/user_profile_setting/my_profile_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/select_preferred_topics_screen.dart';
@@ -10,7 +13,10 @@ import '../../utils/constants.dart';
 import '../../utils/widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  final String name;
+  final String bio;
+  final String image;
+  const EditProfileScreen({Key? key, required this.name, required this.bio, required this.image}) : super(key: key);
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -69,24 +75,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             Center(
                               child: Column(
                                 children: [
-                                  Container(
-                                    width: 80,
-                                    height: 80,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: themeColorBlue,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 2.0,
+                                  ClipOval(
+                                    child: Container(
+                                      width: 80,
+                                      height: 80,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        gradient: widget.image == "" ? appBodyGradient() : const LinearGradient(colors: [themeColorWhite, themeColorWhite]),
+                                        shape: BoxShape.circle,
                                       ),
+                                      child: widget.image == "" ?
+                                      text(getFirstCharacters(widget.name ?? ""), 25, FontWeight.w400, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                      : Image.network(widget.image, fit: BoxFit.cover,),
                                     ),
-                                    child: text("DP", 25, FontWeight.w400, themeColorWhite, TextDecoration.none, TextAlign.center),
                                   ),
                                   const SizedBox(height: 3.0,),
-                                  text("Dhyey Panchal", 20, FontWeight.w600, themeColorWhite, TextDecoration.none, TextAlign.center),
+                                  text(widget.name, 20, FontWeight.w600, themeColorWhite, TextDecoration.none, TextAlign.center),
                                   const SizedBox(height: 3.0,),
-                                  text("Fullstack Web Developer", 16, FontWeight.w400, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                  text(widget.bio, 16, FontWeight.w400, themeColorWhite, TextDecoration.none, TextAlign.center)
                                 ],
                               ),
                             )
@@ -102,7 +108,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            textFormField(nameCtrl, TextInputType.name, false, "Name",
+                            textFormField(nameCtrl, TextInputType.name, false, widget.name,
                                 IconButton(
                                   onPressed: (){},
                                   icon: Image.asset("assets/images/username.png"),
@@ -110,7 +116,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                             const SizedBox(height: 30.0,),
 
-                            textFormField(bioCtrl, TextInputType.text, false, "Bio",
+                            textFormField(bioCtrl, TextInputType.text, false, widget.bio,
                                 IconButton(
                                     onPressed: (){},
                                     icon: Image.asset("assets/images/bio.png")
@@ -132,7 +138,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               builder: (context, provider, child){
                                 if(provider.updateNameBioSuccess == 1){
                                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                                    Get.off(() => const MyProfileScreen());
+                                    ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(
+                                        "Name and Bio Updated Successfully", themeColorSnackBarGreen));
+                                    Timer(const Duration(seconds: 1), () {
+                                      Get.offAll(() => const BottomNavBarScreen());
+                                    });
                                   });
                                 }
                                 if(provider.updateNameBioSuccess == 0){
@@ -147,7 +157,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     Button(
                                       width: 125,
                                       onTap: (){
-                                        // provider.registerUser("", "", emailCtrl.text, passwordCtrl.text, 1);
+                                        provider.updateNameBio(nameCtrl.text, bioCtrl.text);
                                       },
                                       child:
                                       provider.circularBarShow == 1 ? const CircularProgressIndicator(color: themeColorWhite,) :
@@ -156,14 +166,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     const SizedBox(height: 10,),
                                     InkWell(
                                         onTap: (){
-                                          Get.to(() => const EditEmailPassScreen());
+                                          if(provider.circularBarShow != 1){
+                                            Get.to(() => const EditEmailPassScreen());
+                                          }
                                         },
                                         child: text("Edit Email/Password", 14, FontWeight.w400, themeColorWhite, TextDecoration.underline, TextAlign.center)
                                     ),
                                     const SizedBox(height: 12,),
                                     InkWell(
                                         onTap: (){
-                                          Get.to(() => const SelectTopicsScreen(indicator: 1));
+                                          if(provider.circularBarShow != 1){
+                                            Get.to(() => const SelectTopicsScreen(indicator: 1));
+                                          }
                                         },
                                         child: text("Update Preferred Topics", 14, FontWeight.w400, themeColorWhite, TextDecoration.underline, TextAlign.center)
                                     ),
@@ -181,5 +195,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
+  }
+}
+String getFirstCharacters(String input) {
+  List<String> words = input.split(' ');
+
+  if (words.length > 1) {
+    return '${words[0][0]}${words[1][0]}';
+  } else {
+    return words[0][0];
   }
 }

@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
-import 'package:blogtalk/screens/user_profile_setting/my_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -61,7 +62,7 @@ class _EditEmailPassScreenState extends State<EditEmailPassScreen> {
                       ),
                       padding: const EdgeInsets.all(25.0),
                       alignment: Alignment.bottomLeft,
-                      child: text("Login to Your Account", 20, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center),
+                      child: text("Edit Email/Password", 20, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center),
                     ),
                   ),
                   Expanded(
@@ -145,13 +146,23 @@ class _EditEmailPassScreenState extends State<EditEmailPassScreen> {
                             builder: (context, provider, child){
                               if(provider.updateEmailPassSuccess == 1){
                                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                                  Get.offAll(() => const BottomNavBarScreen());
+                                  ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(
+                                      "Email and Password Updated Successfully", themeColorSnackBarGreen));
+                                  Timer(const Duration(seconds: 1), () {
+                                    Get.offAll(() => const BottomNavBarScreen());
+                                  });
                                 });
                               }
-                              if(provider.updateEmailPassSuccess == 0){
+                              else if(provider.updateEmailPassSuccess == 0 || provider.updateEmailPassSuccess == 3){
                                 WidgetsBinding.instance.addPostFrameCallback((_) {
                                   ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(
                                       errorMsg, themeColorSnackBarRed));
+                                });
+                              }
+                              else if(provider.updateEmailPassSuccess == 2){
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(
+                                      "Please provide correct credentials first...", themeColorSnackBarRed));
                                 });
                               }
                               return Column(
@@ -160,7 +171,7 @@ class _EditEmailPassScreenState extends State<EditEmailPassScreen> {
                                   Button(
                                     width: 125,
                                     onTap: (){
-                                      // provider.registerUser("", "", emailCtrl.text, passwordCtrl.text, 1);
+                                      provider.updateEmailPass(emailCtrl.text, currentPasswordCtrl.text, newPasswordCtrl.text);
                                     },
                                     child:
                                     provider.circularBarShow == 1 ? const CircularProgressIndicator(color: themeColorWhite,) :

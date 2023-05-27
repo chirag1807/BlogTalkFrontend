@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:blogtalk/providers/SplashScreenProvider.dart';
 import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
+import 'package:blogtalk/screens/blog_posts/edit_blog_screen.dart';
 import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
+import 'package:blogtalk/screens/user_profile_setting/edit_profile_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/login_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/select_preferred_topics_screen.dart';
 import 'package:blogtalk/utils/prefs.dart';
