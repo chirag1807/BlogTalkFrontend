@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "718081189999",
+    "project_id": "blogtalk-ed765",
+    "storage_bucket": "blogtalk-ed765.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718081189999:android:52a25d3878883b5975c59a",
+        "android_client_info": {
+          "package_name": "com.example.blogtalk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTi-I1g1Wr6gOt7r0xIqWYUTlZOtdGjGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

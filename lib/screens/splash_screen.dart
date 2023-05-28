@@ -1,14 +1,9 @@
 import 'dart:async';
-
+import 'package:blogtalk/helper/dynamicLink.dart';
 import 'package:blogtalk/providers/SplashScreenProvider.dart';
-import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
-import 'package:blogtalk/screens/blog_posts/edit_blog_screen.dart';
 import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
-import 'package:blogtalk/screens/user_profile_setting/edit_profile_screen.dart';
-import 'package:blogtalk/screens/user_profile_setting/my_profile_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/login_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/select_preferred_topics_screen.dart';
-import 'package:blogtalk/utils/prefs.dart';
 import 'package:get/get.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +19,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    DynamicLink().handleDynamicLinks();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -70,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
               // abc();
               void abc1() {
                 Timer(const Duration(seconds: 1), () {
-                  Get.offAll(() => const MyProfileScreen());
+                  Get.offAll(() => const BottomNavBarScreen());
                 });
               }
               abc1();

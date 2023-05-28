@@ -7,11 +7,13 @@ import 'package:blogtalk/screens/user_reg_login/signup_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/verify_code_screen.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:blogtalk/utils/prefs.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await Prefs.createInstance();
   runApp(const MyApp());
 }

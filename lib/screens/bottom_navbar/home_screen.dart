@@ -1,12 +1,11 @@
-import 'package:blogtalk/repositories/UserRegLogin.dart';
 import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
-import 'package:blogtalk/screens/user_profile_setting/followers_screen.dart';
 import 'package:blogtalk/utils/constants.dart';
 import 'package:blogtalk/utils/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../helper/dynamicLink.dart';
 import '../user_profile_setting/my_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -79,7 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
           height: h,
           child: SingleChildScrollView(
             child: Column(
-              children: [],
+              children: [
+                text("text", 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.justify)
+              ],
             ),
           ),
         ),

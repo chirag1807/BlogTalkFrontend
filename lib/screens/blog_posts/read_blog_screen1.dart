@@ -7,7 +7,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
+import '../../helper/dynamicLink.dart';
 import '../../helper/getFirstCharOfName.dart';
 import '../../providers/blogUtilitiesProvider.dart';
 import '../../repositories/BlogPost.dart';
@@ -213,7 +215,12 @@ class _ReadBlogScreen1State extends State<ReadBlogScreen1> with WidgetsBindingOb
                                 }, icon: const Icon(Icons.edit_note, color: themeColorWhite, size: 35,))
                                     : const SizedBox(),
                                 const SizedBox(width: 15.0,),
-                                SvgPicture.asset("assets/images/share_blog.svg", width: 25, height: 25,),
+                                InkWell(
+                                    onTap: () async {
+                                      Uri url = await DynamicLink().generateDynamicLink(widget.topic, widget.blogId, widget.indicator);
+                                      Share.share(url.toString());
+                                    },
+                                    child: SvgPicture.asset("assets/images/share_blog.svg", width: 25, height: 25,)),
                               ],
                             )
                           ],
