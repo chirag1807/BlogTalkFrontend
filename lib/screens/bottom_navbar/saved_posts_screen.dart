@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper/getFirstCharOfName.dart';
 import '../../providers/BottomNavIndexChangeProvider.dart';
 import '../../utils/constants.dart';
 import '../../utils/widgets.dart';
@@ -33,7 +34,7 @@ class _SavedPostsScreenState extends State<SavedPostsScreen> {
         appBar: AppBar(
           title: Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(bottom: 4.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,7 +140,7 @@ class _SavedPostsScreenState extends State<SavedPostsScreen> {
                                                 ),
                                                 alignment: Alignment.center,
                                                 child: provider.savedPosts![index].author!.image == "" ?
-                                                text(getFirstCharacters(provider.savedPosts![index].author!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                                text(GetFirstCharOfName().getFirstCharacters(provider.savedPosts![index].author!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
                                                     : Image.network(provider.savedPosts![index].author!.image ?? "", fit: BoxFit.cover,),
                                               ),
                                             ),

@@ -67,8 +67,8 @@ class UserRegLogin{
 
     try{
       var response = await http.get(
-          Uri.parse("$baseUrl/user"),
-          headers: {"Authorization": "Bearer $accessToken",},
+        Uri.parse("$baseUrl/user"),
+        headers: {"Authorization": "Bearer $accessToken",},
       );
 
       log(response.body);
@@ -76,7 +76,7 @@ class UserRegLogin{
         print("done");
         var body = jsonDecode(response.body);
 
-        var userData = UserData.fromJson(body);
+        var userData = UserData.fromJson(body["result"]);
 
         return userData;
       }

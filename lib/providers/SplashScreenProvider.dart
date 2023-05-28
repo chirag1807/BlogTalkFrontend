@@ -25,6 +25,7 @@ class SplashScreenProvider extends ChangeNotifier{
 
         if(a == 1){
           if(isTopicSelected == true){
+            print("Yesyes");
             ListAndMap? topicNameIds = await UserRegLogin().getAllTopicNameId();
             if(topicNameIds != null){
               return 1;

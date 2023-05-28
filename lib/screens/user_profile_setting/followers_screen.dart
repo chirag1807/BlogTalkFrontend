@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper/getFirstCharOfName.dart';
 import '../../providers/blogUtilitiesProvider.dart';
 import '../../utils/widgets.dart';
 
@@ -88,7 +89,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: provider.followers![index].user!.image == "" ?
-                                      text(getFirstCharacters(provider.followers![index].user!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                      text(GetFirstCharOfName().getFirstCharacters(provider.followers![index].user!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
                                           : Image.network(provider.followers![index].user!.image ?? "", fit: BoxFit.cover,),
                                     ),
                                   ),
@@ -164,15 +165,5 @@ class _FollowersScreenState extends State<FollowersScreen> {
         ),
       ),
     );
-  }
-}
-
-String getFirstCharacters(String input) {
-  List<String> words = input.split(' ');
-
-  if (words.length > 1) {
-    return '${words[0][0]}${words[1][0]}';
-  } else {
-    return words[0][0];
   }
 }

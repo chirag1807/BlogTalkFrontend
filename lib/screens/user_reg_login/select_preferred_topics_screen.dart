@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:blogtalk/models/ListAndMap.dart';
 import 'package:blogtalk/providers/UserRegLoginProvider.dart';
 import 'package:blogtalk/repositories/UserRegLogin.dart';
+import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -170,7 +171,7 @@ class _SelectTopicsScreenState extends State<SelectTopicsScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(
                                   "Your Preferred Topics has been Set Successfully", themeColorSnackBarGreen));
                               Timer(const Duration(seconds: 1), () {
-                                // Get.offAll(() => )
+                                Get.offAll(() => const BottomNavBarScreen());
                               });
                             });
                           }

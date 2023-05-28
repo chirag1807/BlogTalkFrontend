@@ -5,6 +5,7 @@ import 'package:blogtalk/screens/blog_posts/create_blog_screen.dart';
 import 'package:blogtalk/screens/blog_posts/edit_blog_screen.dart';
 import 'package:blogtalk/screens/bottom_navbar/bottom_navbar_screen.dart';
 import 'package:blogtalk/screens/user_profile_setting/edit_profile_screen.dart';
+import 'package:blogtalk/screens/user_profile_setting/my_profile_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/login_screen.dart';
 import 'package:blogtalk/screens/user_reg_login/select_preferred_topics_screen.dart';
 import 'package:blogtalk/utils/prefs.dart';
@@ -39,9 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   Timer(const Duration(seconds: 1), () {
                     // go to home screen here
                     Timer(const Duration(seconds: 1), () {
-                      // Get.offAll(() => const BottomNavBarScreen());
+                      Get.offAll(() => const BottomNavBarScreen());
                       // Get.offAll(() => const MyProfileScreen());
-                      Get.offAll(() => const CreateBlogScreen());
+                      // Get.offAll(() => const CreateBlogScreen());
                     });
                   });
                 }
@@ -69,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
               // abc();
               void abc1() {
                 Timer(const Duration(seconds: 1), () {
-                  Get.offAll(() => const BottomNavBarScreen());
+                  Get.offAll(() => const MyProfileScreen());
                 });
               }
               abc1();

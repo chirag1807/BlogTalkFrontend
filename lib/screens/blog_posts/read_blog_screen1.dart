@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
+import '../../helper/getFirstCharOfName.dart';
 import '../../providers/blogUtilitiesProvider.dart';
 import '../../repositories/BlogPost.dart';
 import '../../utils/constants.dart';
@@ -260,7 +261,7 @@ class _ReadBlogScreen1State extends State<ReadBlogScreen1> with WidgetsBindingOb
                                       ),
                                       alignment: Alignment.center,
                                       child: provider.blogPost!.author!.image == "" ?
-                                      text(getFirstCharacters(provider.blogPost!.author!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                      text(GetFirstCharOfName().getFirstCharacters(provider.blogPost!.author!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
                                           : Image.network(provider.blogPost!.author!.image ?? "", fit: BoxFit.cover,),
                                     ),
                                     const SizedBox(width: 5.0,),
@@ -350,14 +351,4 @@ class _ReadBlogScreen1State extends State<ReadBlogScreen1> with WidgetsBindingOb
 // }
 //chatgpt => populate data in node.js
 
-}
-
-String getFirstCharacters(String input) {
-  List<String> words = input.split(' ');
-
-  if (words.length > 1) {
-    return '${words[0][0]}${words[1][0]}';
-  } else {
-    return words[0][0];
-  }
 }

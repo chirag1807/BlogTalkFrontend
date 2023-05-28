@@ -8,6 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper/getFirstCharOfName.dart';
+
 class ReadBlogScreen extends StatefulWidget {
   final BlogPostModel blogPost;
   final String topic;
@@ -188,7 +190,7 @@ class _ReadBlogScreenState extends State<ReadBlogScreen> {
                             ),
                             alignment: Alignment.center,
                             child: widget.blogPost.author!.image == "" ?
-                                text(getFirstCharacters(widget.blogPost.author!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                text(GetFirstCharOfName().getFirstCharacters(widget.blogPost.author!.name ?? ""), 17, FontWeight.w500, themeColorWhite, TextDecoration.none, TextAlign.center)
                                 : Image.network(widget.blogPost.author!.image ?? "", fit: BoxFit.cover,),
                           ),
                           const SizedBox(width: 5.0,),
@@ -235,16 +237,4 @@ class _ReadBlogScreenState extends State<ReadBlogScreen> {
   // }
   //chatgpt => populate data in node.js
 
-}
-
-String getFirstCharacters(String input) {
-  List<String> words = input.split(' ');
-
-  if (words.length > 1) {
-    // If there are more than one word, return the first character of the first two words
-    return '${words[0][0]}${words[1][0]}';
-  } else {
-    // If there is only one word, return the first character
-    return words[0][0];
-  }
 }

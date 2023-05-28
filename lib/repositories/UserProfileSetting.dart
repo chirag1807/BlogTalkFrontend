@@ -90,4 +90,42 @@ class UserProfileSetting{
       return 0;
     }
   }
+
+  Future<int?> updateSendEmailNotif(int indicator, bool value) async {
+    try{
+      String accessToken = Prefs.getInstance().getString(ACCESS_TOKEN)!;
+
+      var response = await http.patch(
+          Uri.parse("$baseUrl/user/sendEmailNotif"),
+          headers: {"Authorization": "Bearer $accessToken", 'Content-Type': 'application/json; charset=UTF-8',},
+          body: json.encode(
+              {
+                "indicator": indicator,
+                "value": value,
+              }
+          )
+      );
+
+      if(response.statusCode == 200){
+        log(response.body);
+        return 1;
+      }
+      else if(response.statusCode == 401){
+        int? a = await UserRegLogin().resetToken();
+        if(a != 1){
+          Get.offAll(() => const LoginScreen(indicator: 0,));
+        }
+        else{
+          return 0;
+        }
+      }
+      else{
+        return 0;
+      }
+
+    } catch(e) {
+      log(e.toString());
+      return 0;
+    }
+  }
 }

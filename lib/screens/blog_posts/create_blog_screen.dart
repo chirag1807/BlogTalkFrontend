@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/widgets.dart';
+import '../bottom_navbar/bottom_navbar_screen.dart';
+import 'package:get/get.dart';
 
 class CreateBlogScreen extends StatefulWidget {
   const CreateBlogScreen({Key? key}) : super(key: key);
@@ -45,6 +47,7 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
         child: Scaffold(
           backgroundColor: themeColorBlue,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: text("Create Blog", 20, FontWeight.w700, themeColorWhite, TextDecoration.none, TextAlign.center),
             flexibleSpace: Container(
               decoration: BoxDecoration(
@@ -262,14 +265,45 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: w * 0.4,
-                    alignment: Alignment.center,
-                    child: const Text("Save to Draft", style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 17,
-                      color: themeColorWhite
-                    ),),
+                  Consumer<CreateBlogProvider>(
+                    builder: (context, provider, child){
+                      if(provider.successSavePost == 1){
+                        print("fromSuccessSavePost1");
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          ScaffoldMessenger.of(context).showSnackBar(displaySnackBar("Post Saved to Draft Successfully", themeColorSnackBarGreen));
+                        });
+                        Timer(const Duration(seconds: 1), () {
+                          Get.offAll(() => const BottomNavBarScreen());
+                        });
+                      }
+                      if(provider.successSavePost == 0){
+                        print("fromSuccessSavePost0");
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          ScaffoldMessenger.of(context).showSnackBar(displaySnackBar(errorMsg, themeColorSnackBarRed));
+                        });
+                      }
+                    return InkWell(
+                      onTap: (){
+                        if(coverImg != null){
+                          provider.savePostToDraft(addTitleCtrl.text, addContentCtrl.text, blogTopicValue, coverImg!.path);
+                        }
+                        else{
+                          provider.savePostToDraft(addTitleCtrl.text, addContentCtrl.text, blogTopicValue, "");
+                        }
+                      },
+                      child: Container(
+                        width: w * 0.4,
+                        alignment: Alignment.center,
+                        child: provider.circularBarShowSaveBlogPost == 1 ?
+                            const CircularProgressIndicator(color: themeColorWhite,) :
+                        const Text("Save to Draft", style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                          color: themeColorWhite
+                        ),),
+                      ),
+                    );
+                    }
                   ),
                   const VerticalDivider(thickness: 1, color: themeColorWhite,),
                   Consumer<CreateBlogProvider>(
@@ -279,9 +313,9 @@ class _CreateBlogScreenState extends State<CreateBlogScreen> {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           ScaffoldMessenger.of(context).showSnackBar(displaySnackBar("Post Uploaded Successfully", themeColorSnackBarGreen));
                         });
-                        // Timer(Duration(seconds: 1), () {
-                          // Get.offAll(() => );
-                        // });
+                        Timer(const Duration(seconds: 1), () {
+                          Get.offAll(() => const BottomNavBarScreen());
+                        });
                       }
                       if(provider.successUploadPost == 0){
                         print("fromSuccessUploadPost0");

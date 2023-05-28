@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
+import '../../helper/getFirstCharOfName.dart';
 import '../../utils/constants.dart';
 import '../../utils/widgets.dart';
 
@@ -85,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         shape: BoxShape.circle,
                                       ),
                                       child: widget.image == "" ?
-                                      text(getFirstCharacters(widget.name ?? ""), 25, FontWeight.w400, themeColorWhite, TextDecoration.none, TextAlign.center)
+                                      text(GetFirstCharOfName().getFirstCharacters(widget.name ?? ""), 25, FontWeight.w400, themeColorWhite, TextDecoration.none, TextAlign.center)
                                       : Image.network(widget.image, fit: BoxFit.cover,),
                                     ),
                                   ),
@@ -195,14 +196,5 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
-  }
-}
-String getFirstCharacters(String input) {
-  List<String> words = input.split(' ');
-
-  if (words.length > 1) {
-    return '${words[0][0]}${words[1][0]}';
-  } else {
-    return words[0][0];
   }
 }
